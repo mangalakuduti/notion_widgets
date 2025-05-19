@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Bebas+Neue" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>greeting2</title>
+
+    <style>
+        body {
+            background-color: #fff;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+
+        .full-table {
+            display: table;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .table-cell {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .greeting-outside {
+            font-family: 'Verdana';
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #05105c;
+        }
+
+        .card {
+            padding: 20px;
+            border-radius: 10px;
+            background: #05105c;
+            width: 85vw;
+            color: #fff;
+            display: inline-block;
+            box-shadow: 2px 2px 1px 0px #330835;
+        }
+
+        .card:hover {
+            margin-top: 2px;
+            box-shadow: none;
+        }
+
+        .date {
+            display: block;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 5em;
+            margin-bottom: 10px;
+        }
+
+        .clock {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2em;
+        }
+
+        .time {
+            display: inline-block;
+            min-width: 37px;
+        }
+
+        .colon {
+            font-size: 1.1em;
+            display: inline-block;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="full-table">
+    <div class="table-cell">
+        <!-- Greeting outside the card -->
+        <div class="greeting-outside" id="greet"></div>
+
+        <!-- Card with stacked date and time -->
+        <div class="card">
+            <div class="date" id="date"></div>
+            <div class="clock">
+                <div class="time" id="hour"></div>
+                <div class="colon">:</div>
+                <div class="time" id="min"></div>
+                <div class="colon">:</div>
+                <div class="time" id="sec"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function date() {
+    const today = new Date();
+    document.getElementById('date').innerHTML = today.toDateString();
+}
+
+function clock() {
+    const name = "Manas Angalakuduti";
+    const today = new Date();
+    const hour = zeros(twelveHour(today.getHours()));
+    const minutes = zeros(today.getMinutes());
+    const secondsRaw = zeros(today.getSeconds());
+    const period = today.getHours() >= 12 ? "pm" : "am";
+    const seconds = `${secondsRaw} ${period}`;
+    const hrs = today.getHours();
+
+    let greet = '';
+    if (hrs < 12) greet = 'Good Morning';
+    else if (hrs >= 12 && hrs <= 17) greet = 'Good Afternoon';
+    else if (hrs >= 17 && hrs <= 24) greet = 'Good Evening';
+
+    document.getElementById('greet').innerHTML = `${greet}, ${name}`;
+    document.getElementById('hour').innerHTML = hour;
+    document.getElementById('min').innerHTML = minutes;
+    document.getElementById('sec').innerHTML = seconds;
+}
+
+function twelveHour(hour) {
+    if (hour > 12) return hour - 12;
+    if (hour === 0) return 12;
+    return hour;
+}
+
+function zeros(num) {
+    return num < 10 ? '0' + num : num;
+}
+
+function dateTime() {
+    date();
+    clock();
+    setTimeout(dateTime, 500);
+}
+
+dateTime();
+</script>
+
+</body>
+</html>
